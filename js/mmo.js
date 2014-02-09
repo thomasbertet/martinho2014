@@ -16,6 +16,10 @@ angular.module('mmo', ['ngRoute', 'firebase'])
                 controller:'DefaultVoteCtrl',
                 templateUrl:'views/vote/list.html'
             })
+            .when('/about', {
+                controller:'AboutCtrl',
+                templateUrl:'views/about.html'
+            })
             .otherwise({
                 redirectTo:'/'
             });
@@ -25,10 +29,14 @@ angular.module('mmo', ['ngRoute', 'firebase'])
         $scope.votes = MmoVoteStore;
 
         $scope.save = function() {
-            console.log("saving ! ");
             MmoVoteStore.$add($scope.vote, function() {
-                $timeout(function() { $location.path('/'); });
+                $timeout(function() {
+                    $location.path('/');
+                    $scope.voted = true;
+                });
             });
-
         };
+    })
+    .controller('AboutCtrl', function($scope, $location, $timeout) {
+
     });
